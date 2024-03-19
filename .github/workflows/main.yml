@@ -9,7 +9,7 @@ jobs:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: password
-      DB_HOST: localhost
+      DB_HOST: 0.0.0.0
       BROADCAST_DRIVER: log
       CACHE_DRIVER: file
       QUEUE_CONNECTION: file
