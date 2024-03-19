@@ -2,7 +2,7 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use GuzzleHttp\Client;
+use App\Models\User;
 
 class UserTest extends TestCase
 {
