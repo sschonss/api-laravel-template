@@ -44,7 +44,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, fileinfo, mysql
+          extensions: mbstring, dom, fileinfo, mysql, pdo
           coverage: xdebug
 
       - name: Get composer cache directory
@@ -75,7 +75,7 @@ jobs:
         run: php artisan config:clear
 
       - name: Run Migration
-        run: php artisan migrate -v
+        run: php artisan migrate:fresh
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
