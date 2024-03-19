@@ -11205,3 +11205,7 @@
 172.18.0.1 - - [04/Mar/2024:13:49:23 +0000] "GET /appVersion/ HTTP/1.1" 200 2971 "http://192.168.1.28/produtorErva/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 172.18.0.1 - - [04/Mar/2024:13:50:37 +0000] "GET /api/produtorErva/format HTTP/1.1" 200 180 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 172.18.0.1 - - [04/Mar/2024:13:50:37 +0000] "GET /favicon.ico HTTP/1.1" 200 266174 "http://192.168.1.28/api/produtorErva/format" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+172.31.0.1 - - [19/Mar/2024:02:37:24 +0000] "POST /api/register HTTP/1.1" 500 1101462 "-" "PostmanRuntime/7.37.0"
+172.31.0.1 - - [19/Mar/2024:02:37:46 +0000] "POST /api/register HTTP/1.1" 201 31 "-" "PostmanRuntime/7.37.0"
+172.31.0.1 - - [19/Mar/2024:02:37:50 +0000] "POST /api/login HTTP/1.1" 200 378 "-" "PostmanRuntime/7.37.0"
+172.31.0.1 - - [19/Mar/2024:02:38:09 +0000] "GET /api/user HTTP/1.1" 200 168 "-" "PostmanRuntime/7.37.0"
