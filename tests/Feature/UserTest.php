@@ -11,7 +11,8 @@ class UserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->artisan('migrate'); // Executar migrações antes dos testes
+        $this->artisan('migrate');
+        $this->artisan('jwt:secret');
     }
     private $token;
     public function test_the_register_user_endpoint_returns_a_successful_response(): void
