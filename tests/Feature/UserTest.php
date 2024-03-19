@@ -12,6 +12,7 @@ class UserTest extends TestCase
     {
         parent::setUp();
         $this->artisan('migrate');
+        $this->artisan('key:generate');
         $this->artisan('jwt:secret');
     }
     private $token;
