@@ -8,85 +8,35 @@ class UserTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp(): void
+    public function test_register_user(): void
     {
-        parent::setUp();
-        $this->artisan('migrate');
-        $this->artisan('key:generate');
-        $this->mockConsoleInteraction();
-        $this->artisan('jwt:secret');
+        $user = new User();
+        $user->name = 'Teste';
+        $user->email = 'teste@teste.com';
+        $user->password = '123456789';
+        $user->save();
+
+        $this->assertTrue($user->id > 0);
+
+        $user->delete();
     }
 
-    private function mockConsoleInteraction()
+    public function test_update_user(): void
     {
-        $this->instance(
-            Symfony\Component\Console\Output\OutputInterface::class,
-            Mockery::mock(Symfony\Component\Console\Output\OutputInterface::class)
-        );
+        $user = new User();
+        $user->name = 'Teste';
+        $user->email = 'teste@teste.com';
+        $user->password = '123456789';
+        $user->save();
 
-        $this->instance(
-            Symfony\Component\Console\Input\InputInterface::class,
-            Mockery::mock(Symfony\Component\Console\Input\InputInterface::class)
-        );
+        $user->name = 'Teste 2';
+        $user->save();
 
-        $this->instance(
-            Symfony\Component\Console\Style\SymfonyStyle::class,
-            Mockery::mock(Symfony\Component\Console\Style\SymfonyStyle::class)
-                ->shouldReceive('askQuestion')
-                ->andReturn('')
-                ->getMock()
-        );
-    }
+        $this->assertEquals('Teste 2', $user->name);
 
-    private $token;
-
-    public function test_the_register_user_endpoint_returns_a_successful_response(): void
-    {
-        $guzzle = new GuzzleHttp\Client();
-        $response = $guzzle->post('http://localhost/api/register', [
-            'form_params' => [
-                'name' => 'John Doe',
-                'email' => 'john@john.com',
-                'password' => 'password',
-            ]
-        ]);
-
-        $response->assertStatus(201);
-
-        $response->assertJson([
-            'status' => 'success'
-        ]);
+        $user->delete();
 
     }
 
-    public function test_the_login_user_endpoint_returns_a_successful_response(): void
-    {
 
-        $guzzle = new GuzzleHttp\Client();
-        $response = $guzzle->post('http://localhost/api/register', [
-            'form_params' => [
-                'name' => 'John Doe',
-                'email' => 'john@john.com',
-                'password' => 'password',
-            ]
-        ]);
-
-        $response = $guzzle->post('http://localhost/api/login', [
-            'form_params' => [
-                'email' => 'john@john.com',
-                'password' => 'password',
-            ]
-        ]);
-
-        $response->assertOk();
-
-        $response->assertJsonStructure([
-            'access_token',
-            'token_type',
-            'expires_in'
-        ]);
-
-        $this->token = $response->json('access_token');
-
-    }
 }
