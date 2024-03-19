@@ -1,10 +1,8 @@
 <?php
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use GuzzleHttp\Client;
-
 
 class UserTest extends TestCase
 {
@@ -15,9 +13,33 @@ class UserTest extends TestCase
         parent::setUp();
         $this->artisan('migrate');
         $this->artisan('key:generate');
+        $this->mockConsoleInteraction();
         $this->artisan('jwt:secret');
     }
+
+    private function mockConsoleInteraction()
+    {
+        $this->instance(
+            Symfony\Component\Console\Output\OutputInterface::class,
+            Mockery::mock(Symfony\Component\Console\Output\OutputInterface::class)
+        );
+
+        $this->instance(
+            Symfony\Component\Console\Input\InputInterface::class,
+            Mockery::mock(Symfony\Component\Console\Input\InputInterface::class)
+        );
+
+        $this->instance(
+            Symfony\Component\Console\Style\SymfonyStyle::class,
+            Mockery::mock(Symfony\Component\Console\Style\SymfonyStyle::class)
+                ->shouldReceive('askQuestion')
+                ->andReturn('')
+                ->getMock()
+        );
+    }
+
     private $token;
+
     public function test_the_register_user_endpoint_returns_a_successful_response(): void
     {
         $guzzle = new GuzzleHttp\Client();
