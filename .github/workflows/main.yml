@@ -9,7 +9,6 @@ jobs:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: password
-      DB_HOST: 0.0.0.0
       BROADCAST_DRIVER: log
       CACHE_DRIVER: file
       QUEUE_CONNECTION: file
@@ -75,7 +74,6 @@ jobs:
       - name: Run Migration
         run: php artisan migrate -v
         env:
-          DB_HOST: ${{ job.services.mysql.host }}
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
