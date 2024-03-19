@@ -1,9 +1,11 @@
 <?php
 
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use GuzzleHttp\Client;
+
+
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
@@ -18,11 +20,14 @@ class UserTest extends TestCase
     private $token;
     public function test_the_register_user_endpoint_returns_a_successful_response(): void
     {
-        $response = $this->post('/api/register', [
-            'name' => 'John Doe',
-            'email' => 'john@john.com',
-            'password' => 'password',
-            ]);
+        $guzzle = new GuzzleHttp\Client();
+        $response = $guzzle->post('http://localhost/api/register', [
+            'form_params' => [
+                'name' => 'John Doe',
+                'email' => 'john@john.com',
+                'password' => 'password',
+            ]
+        ]);
 
         $response->assertStatus(201);
 
@@ -34,15 +39,21 @@ class UserTest extends TestCase
 
     public function test_the_login_user_endpoint_returns_a_successful_response(): void
     {
-        $this->post('/api/register', [
-            'name' => 'John Doe',
-            'email' => 'john@john.com',
-            'password' => 'password',
+
+        $guzzle = new GuzzleHttp\Client();
+        $response = $guzzle->post('http://localhost/api/register', [
+            'form_params' => [
+                'name' => 'John Doe',
+                'email' => 'john@john.com',
+                'password' => 'password',
+            ]
         ]);
 
-        $response = $this->post('/api/login', [
-            'email' => 'john@john.com',
-            'password' => 'password',
+        $response = $guzzle->post('http://localhost/api/login', [
+            'form_params' => [
+                'email' => 'john@john.com',
+                'password' => 'password',
+            ]
         ]);
 
         $response->assertOk();
